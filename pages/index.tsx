@@ -356,4 +356,88 @@ export default function RektConfessionBooth() {
                   >
                     {isLoading || isMinting ? (
                       <>
-                        <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent
+                        <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full"></div>
+                        <span>{isMinting ? 'Minting NFT...' : 'Preparing...'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Trophy className="w-5 h-5" />
+                        <span>Mint NFT on Arbitrum</span>
+                      </>
+                    )}
+                  </button>
+
+                  <button
+                    onClick={() => setStep(1)}
+                    className="w-full bg-gray-700 hover:bg-gray-600 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    ← Back to Edit
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-3xl font-bold mb-4">Confession Minted! 🎉</h2>
+                  <p className="text-gray-400">Your REKT story is now immortalized on Arbitrum.</p>
+                </div>
+
+                <div className="bg-gray-900 rounded-lg p-6 text-center border border-gray-700">
+                  <div className="w-32 h-32 mx-auto mb-4 bg-red-600 rounded-lg flex items-center justify-center text-4xl">💀</div>
+                  <h3 className="text-xl font-bold mb-2">REKT Confession #{mintedTokenId || '???'}</h3>
+                  <p className="text-gray-400 text-sm mb-4 italic">"{confession}"</p>
+                  <div className="flex justify-center space-x-4 text-sm">
+                    <span className="bg-yellow-600 px-3 py-1 rounded">+{calculateReward(confession.length)} $REKT Earned</span>
+                    <span className="bg-red-600 px-3 py-1 rounded">{calculateRektLevel(confession)}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <button
+                    onClick={shareToFarcaster}
+                    className="w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-lg font-bold text-lg transition-colors flex items-center justify-center space-x-2"
+                  >
+                    <Send className="w-5 h-5" />
+                    <span>Share on Farcaster</span>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab('gallery')}
+                    className="w-full bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-medium transition-colors"
+                  >
+                    View in Gallery
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setStep(1);
+                      setConfession('');
+                      setMintedTokenId(null);
+                      setError('');
+                    }}
+                    className="w-full bg-gray-800 hover:bg-gray-700 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Make Another Confession
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-3xl font-bold mb-4">Confession Gallery 💀</h2>
+              <p className="text-gray-400">See what others have confessed to being REKT by.</p>
+              <p className="text-sm text-yellow-400 mt-2">
+                {isContractsDeployed ? 'Showing real on-chain confessions' : 'Showing demo confessions (deploy contracts for real data)'}
+              </p>
+            </div>
+
+            <div className="grid gap-4">
+              {confessions.map((conf) => (
+                <div key={conf.id} className="bg-gray-900 rounded-lg p-6 border-l-4 border-red-500 hover:bg-gray-800 transition-colors">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex items-center space-x-3">
+           
